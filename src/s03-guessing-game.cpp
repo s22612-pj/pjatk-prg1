@@ -1,31 +1,29 @@
 #include <iostream>
-#include <string>
 #include <random>
+#include <string>
 
 auto main() -> int
 {
-	std::random_device rd;
-	std::uniform_int_distribution<int> random_number(1, 100);
-	auto const guessed_number = random_number(rd);
+    std::random_device rd;
+    std::uniform_int_distribution<int> random_number(1, 100);
+    auto const number_to_guess = random_number(rd);
 
-	auto entered_number = std::string{};
-	auto number = int{};
+    auto entered_number = std::string{};
+    auto number         = int{};
 
-	do {
-		std::cout << "guess: ";
-		std::getline(std::cin, entered_number);
-		number = std::stoi(entered_number);
+    do {
+        std::cout << "guess: ";
+        std::getline(std::cin, entered_number);
+        number = std::stoi(entered_number);
 
-		if (number > guessed_number) {
-		std::cout << "number too big!\n";
-		} else if (number < guessed_number) {
-			std::cout << "number to small!\n";
-		}
-	} while (number != guessed_number);
-	
-	std::cout << "just right!";
+        if (number > number_to_guess) {
+            std::cout << "number too big!\n";
+        } else if (number < number_to_guess) {
+            std::cout << "number to small!\n";
+        }
+    } while (number != number_to_guess);
 
-	return 0;
+    std::cout << "just right!";
 
-
+    return 0;
 }
