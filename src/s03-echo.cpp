@@ -25,8 +25,11 @@ auto main(int argc, char* argv[]) -> int
             std::cout << argv[i] << std::endl;
         }
     } else {
-        std::cout << "Nie podano zadnego poczatkowego argumentu \n";
-    }
+        for (int i = 1; i < argc; i++) {
+            std::cout << argv[i] << " ";
+        }
 
+        std::cout << "\n";
+    }
     return 0;
 }
