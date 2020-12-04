@@ -4,15 +4,9 @@
 
 namespace s22612 {
 struct Time {
-	int hour, minute, second;
-	Time(int, int, int);
-enum class Time_of_day
-{
-	MORNING,
-	AFTERNOON,
-	EVENING,
-	NIGHT
-};
+    int hour, minute, second;
+    Time(int, int, int);
+    enum class Time_of_day { MORNING, AFTERNOON, EVENING, NIGHT };
 
 
     auto to_string() const -> std::string;

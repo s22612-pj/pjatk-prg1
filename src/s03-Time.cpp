@@ -1,26 +1,29 @@
 #include <Time.h>
+
 #include <iomanip>
 #include <iostream>
 #include <sstream>
 
-s22612::Time::Time(int h, int m, int s) {
-	hour = h;
-	minute = m;
-	second = s;
+s22612::Time::Time(int h, int m, int s)
+{
+    hour   = h;
+    minute = m;
+    second = s;
 }
 
 
 auto timeFormatter(unsigned i) -> std::string
 {
-	return i < 10 ? "0" + std::to_string(i) : std::to_string(i);
+    return i < 10 ? "0" + std::to_string(i) : std::to_string(i);
 }
 
 
 auto s22612::Time::to_string() const -> std::string
 {
-	auto out = std::ostringstream{};
-	out << std::setw(2) << timeFormatter(hour) << ":" << timeFormatter(minute) << ":" << timeFormatter(second);
-	return out.str();
+    auto out = std::ostringstream{};
+    out << std::setw(2) << timeFormatter(hour) << ":" << timeFormatter(minute)
+        << ":" << timeFormatter(second);
+    return out.str();
 }
 
 
@@ -52,34 +55,33 @@ auto s22612::Time::time_of_day() const -> Time_of_day
     } else if (hour >= 18 && hour < 21) {
         return Time_of_day::EVENING;
     } else {
-	return Time_of_day::NIGHT;
-	}
+        return Time_of_day::NIGHT;
+    }
 }
 
 auto s22612::Time::next_hour() -> void
 {
-	if (hour == 23) {
-		hour = 0;
-	} else {
-		++hour;
-	}
+    if (hour == 23) {
+        hour = 0;
+    } else {
+        ++hour;
+    }
 }
 
 auto s22612::Time::next_minute() -> void
 {
-
-	if (minute == 59) {
-		minute = 0;
-		next_hour();
-	}
+    if (minute == 59) {
+        minute = 0;
+        next_hour();
+    }
 }
 
 auto s22612::Time::next_second() -> void
 {
-	if (second == 59) {
-		second = 0;
-		next_minute();
-	}
+    if (second == 59) {
+        second = 0;
+        next_minute();
+    }
 }
 
 auto s22612::Time::count_seconds() const -> uint64_t
@@ -98,20 +100,17 @@ auto s22612::Time::time_to_midnight() -> Time
 }
 
 
-
-
 auto s22612::Time::operator+(Time const& time) -> Time
 {
-
     for (int i = 0; i < time.hour; ++i) {
         next_hour();
-};
+    };
     for (int i = 0; i < time.minute; ++i) {
         next_minute();
-};
+    };
     for (int i = 0; i < time.second; ++i) {
         next_second();
-};
+    };
     return *this;
 }
 
@@ -119,7 +118,7 @@ auto s22612::Time::operator-(Time const& time) -> Time
 {
     auto second_for_operator = second - time.second;
     auto minute_for_operator = minute - time.minute;
-    auto hour_for_operator = hour - time.hour;
+    auto hour_for_operator   = hour - time.hour;
     if (second_for_operator < 0) {
         --minute_for_operator;
         second = 60 + second_for_operator;
@@ -153,9 +152,9 @@ auto s22612::Time::operator>(Time const& time) -> bool
 }
 auto s22612::Time::operator==(Time const& time) -> bool
 {
-    return (hour == time.hour && minute == time.minute && second == time.second);
+    return (hour == time.hour && minute == time.minute
+            && second == time.second);
 }
-
 
 
 auto main() -> int
@@ -191,13 +190,13 @@ auto main() -> int
     std::cout << (a + b).to_string() << "\n";
 
     std::cout << "operator-\n";
-    a = s22612::Time{ 3, 59, 59};
-    b = s22612::Time{ 4, 0, 0};
+    a = s22612::Time{3, 59, 59};
+    b = s22612::Time{4, 0, 0};
     std::cout << (a - b).to_string() << "\n";
 
     std::cout << "operator<\n";
     a = s22612::Time{23, 59, 59};
-    b = s22612::Time{ 0, 0, 1};
+    b = s22612::Time{0, 0, 1};
     if (a > b) {
         std::cout << a.to_string() << " > " << b.to_string() << "\n";
     } else {
@@ -206,7 +205,7 @@ auto main() -> int
 
     std::cout << "operator==\n";
     a = s22612::Time{23, 59, 59};
-    b = s22612::Time{ 0, 0, 1};
+    b = s22612::Time{0, 0, 1};
     if (a == b) {
         std::cout << a.to_string() << " == " << b.to_string() << "\n";
     } else {
