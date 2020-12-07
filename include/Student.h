@@ -5,8 +5,10 @@
 
 
 struct Student {
-    std::string imie, nazwisko;
-    int indeks, aktualny_semestr;
+    std::string imie;
+    std::string nazwisko;
+    int indeks;
+    int aktualny_semestr;
     double srednia_ocen;
 
     Student(std::string i, std::string n, int in, int akt_s, double sr_o)

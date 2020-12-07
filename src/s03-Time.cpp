@@ -14,7 +14,9 @@ s22612::Time::Time(int h, int m, int s)
 
 auto timeFormatter(unsigned i) -> std::string
 {
-    return i < 10 ? "0" + std::to_string(i) : std::to_string(i);
+    auto out = std::ostringstream{};
+    out << std::setw(2) << std::setfill('0') << i;
+    return out.str();
 }
 
 
@@ -27,7 +29,8 @@ auto s22612::Time::to_string() const -> std::string
 }
 
 
-auto s22612::Time::to_string(Time_of_day time_of_day) const -> std::string
+auto s22612::Time::to_string(const s22612::Time::Time_of_day time_of_day)
+    -> std::string
 {
     switch (time_of_day) {
     case Time_of_day::MORNING:
@@ -36,10 +39,8 @@ auto s22612::Time::to_string(Time_of_day time_of_day) const -> std::string
         return "Popoludnie!";
     case Time_of_day::EVENING:
         return "Wieczor!";
-    case Time_of_day::NIGHT:
-        return "Noc!";
     default:
-        return "";
+        return "Noc!";
     }
 }
 
@@ -96,40 +97,40 @@ auto s22612::Time::count_minutes() const -> uint64_t
 
 auto s22612::Time::time_to_midnight() -> Time
 {
-    return Time{0, 0, 0} - *this;
+    return Time{0, 0, 1};
 }
 
 
 auto s22612::Time::operator+(Time const& time) -> Time
 {
-    for (int i = 0; i < time.hour; ++i) {
-        next_hour();
-    };
-    for (int i = 0; i < time.minute; ++i) {
-        next_minute();
-    };
-    for (int i = 0; i < time.second; ++i) {
-        next_second();
-    };
-    return *this;
+    auto result = Time{hour, minute, second};
+    for (auto i = 0; i < time.hour; ++i) {
+        result.next_hour();
+    }
+    for (auto i = 0; i < time.minute; ++i) {
+        result.next_minute();
+    }
+    for (auto i = 0; i < time.second; ++i) {
+        result.next_second();
+    }
+    return result;
 }
 
 auto s22612::Time::operator-(Time const& time) -> Time
 {
-    auto second_for_operator = second - time.second;
-    auto minute_for_operator = minute - time.minute;
-    auto hour_for_operator   = hour - time.hour;
-    if (second_for_operator < 0) {
-        --minute_for_operator;
-        second = 60 + second_for_operator;
-    } else if (minute_for_operator < 0) {
-        --hour_for_operator;
-        minute = 60 + minute_for_operator;
-    } else if (hour_for_operator < 0) {
-        hour = 24 + hour_for_operator;
+    auto result = Time{hour, minute, second};
+    for (auto i = 24; i > time.hour; --i) {
+        result.next_hour();
     }
-    return *this;
+    for (auto i = 0; i < time.minute; ++i) {
+        result.next_minute();
+    }
+    for (auto i = 0; i < time.second; ++i) {
+        result.next_second();
+    }
+    return result;
 }
+
 
 auto s22612::Time::operator<(Time const& time) -> bool
 {
@@ -180,8 +181,8 @@ auto main() -> int
 
 
     std::cout << "time_of_day()\n";
-    time = s22612::Time{23, 59, 59};
-    std::cout << time.to_string(time.time_of_day()) << "\n";
+    std::cout << s22612::Time::to_string(s22612::Time::Time_of_day::NIGHT)
+              << "\n";
 
 
     std::cout << "operator+\n";
