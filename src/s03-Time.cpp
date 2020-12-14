@@ -4,12 +4,9 @@
 #include <iostream>
 #include <sstream>
 
-s22612::Time::Time(int h, int m, int s)
-{
-    hour   = h;
-    minute = m;
-    second = s;
-}
+s22612::Time::Time(int hour, int minute, int second)
+        : hour{hour}, minute{minute}, second{second}
+{}
 
 
 auto timeFormatter(unsigned i) -> std::string
@@ -62,16 +59,16 @@ auto s22612::Time::time_of_day() const -> Time_of_day
 
 auto s22612::Time::next_hour() -> void
 {
-    if (hour == 23) {
+    ++hour;
+    if (hour > 23) {
         hour = 0;
-    } else {
-        ++hour;
     }
 }
 
 auto s22612::Time::next_minute() -> void
 {
-    if (minute == 59) {
+    ++minute;
+    if (minute > 59) {
         minute = 0;
         next_hour();
     }
@@ -79,7 +76,8 @@ auto s22612::Time::next_minute() -> void
 
 auto s22612::Time::next_second() -> void
 {
-    if (second == 59) {
+    ++second;
+    if (second > 59) {
         second = 0;
         next_minute();
     }
@@ -97,7 +95,8 @@ auto s22612::Time::count_minutes() const -> uint64_t
 
 auto s22612::Time::time_to_midnight() -> Time
 {
-    return Time{0, 0, 1};
+    auto result = Time{hour, minute, second};
+    return result - Time{0, 0, 2};
 }
 
 

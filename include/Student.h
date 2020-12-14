@@ -1,26 +1,19 @@
-//#ifndef S22612_STUDENT_H
-//#define S22612_STUDENT_H
-#include <sstream>
+#ifndef S22612_STUDENT_H
+#define S22612_STUDENT_H
+
 #include <string>
-
-
+namespace s22612 {
 struct Student {
-    std::string imie;
-    std::string nazwisko;
+    std::string const imie;
+    std::string const nazwisko;
     int indeks;
     int aktualny_semestr;
     double srednia_ocen;
 
-    Student(std::string i, std::string n, int in, int akt_s, double sr_o)
-    {
-        imie             = i;
-        nazwisko         = n;
-        indeks           = in;
-        aktualny_semestr = akt_s;
-        srednia_ocen     = sr_o;
-    }
 
+    Student(std::string, std::string, int, int, double);
     auto to_string() const -> std::string;
 };
+}  // namespace s22612
 
-//#endif
+#endif
