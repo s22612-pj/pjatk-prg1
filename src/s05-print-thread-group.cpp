@@ -26,9 +26,8 @@ auto main() -> int
         }
 
 
-        for (auto j = v_threads.size(); j + size_of_groups > v_threads.size();
-             j--) {
-            v_threads.at(j - 1).join();
+        for (auto& each : v_threads) {
+            each.join();
         }
     }
     return 0;
