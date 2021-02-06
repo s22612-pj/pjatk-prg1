@@ -36,7 +36,7 @@ auto main(int argc, char* argv[]) -> int
         return 1;
     }
 
-    std::array<char, 4096> buf{0};
+    std::vector<char> buf(info.st_size, 0);
     auto const n = read(fd, buf.data(), buf.size());
     close(fd);
 

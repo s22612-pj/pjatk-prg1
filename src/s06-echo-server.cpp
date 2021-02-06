@@ -33,6 +33,9 @@ auto main_loop(int const server_sock) -> void
             auto const n = read(each, buf.data(), buf.size());
             if (n == -1) {
             } else if (n == 0) {
+                std::cout << "Rozłączono klienta numer: " << each << "\n";
+                shutdown(each, SHUT_RDWR);
+                close(each);
             } else {
                 std::cout << "I/O z " << each << "\n";
                 std::cout << "dostałem z " << each << ": "
