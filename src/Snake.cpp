@@ -195,7 +195,6 @@ int main()
         usleep(250000);
     }
 
-
     std::cout << "-------------Koniec gry-------------"
               << "\n";
     return 0;
