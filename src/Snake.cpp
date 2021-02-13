@@ -4,6 +4,8 @@
 #include <termios.h>
 #include <unistd.h>
 
+#include <random>
+
 bool gameOver;
 const int width  = 70;
 const int height = 20;
@@ -16,6 +18,8 @@ enum Direction { STOP = 0, LEFT, RIGHT, UP, DOWN };
 Direction dir;
 int tailX[100] = {0}, tailY[100] = {0};
 int tailLength;
+std::uniform_int_distribution<int> random_number(1, 42);
+std::random_device rd;
 
 void Setup()
 {
@@ -23,8 +27,8 @@ void Setup()
     dir      = STOP;
     x        = width / 2;
     y        = height / 2;
-    dollarX  = rand() % width;
-    dollarY  = rand() % height;
+    dollarX  = random_number(rd) % width;
+    dollarY  = random_number(rd) % height;
     score    = 0;
 }
 void Draw()
@@ -154,8 +158,8 @@ void Logic()
     if (x == dollarX && y == dollarY) {
         tailLength++;
         score++;
-        dollarX = rand() % width;
-        dollarY = rand() % height;
+        dollarX = random_number(rd) % width;
+        dollarY = random_number(rd) % height;
     }
 
     if (x == 0 || y == -1 || x == width || y == height) {
