@@ -1,9 +1,7 @@
-#include <bits/stdc++.h>
-#include <stropts.h>
 #include <sys/ioctl.h>
 #include <termios.h>
 #include <unistd.h>
-
+#include <iostream>
 #include <random>
 
 bool gameOver;
