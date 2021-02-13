@@ -1,4 +1,3 @@
-
 #include <sys/ioctl.h>
 #include <termios.h>
 #include <unistd.h>
@@ -21,7 +20,6 @@ int tailLength;
 std::uniform_int_distribution<int> random_number(1, 42);
 std::random_device rd;
 
-
 void Setup()
 {
     gameOver = false;
@@ -30,13 +28,11 @@ void Setup()
     y        = height / 2;
     dollarX  = random_number(rd) % width;
     dollarY  = random_number(rd) % height;
-
-    score = 0;
+    score    = 0;
 }
 void Draw()
 {
     std::system("clear");
-
     for (int i = 0; i < width; i++) {
         std::cout << "#";
     }
@@ -101,6 +97,7 @@ void Input()
         char ch;
         std::cin >> ch;
         switch (ch) {
+
         case 'a':
             dir = LEFT;
             break;
@@ -126,12 +123,14 @@ void Input()
 }
 void Logic()
 {
+
     int prevX = tailX[0];
     int prevY = tailY[0];
     int prev2X, prev2Y;
 
     tailX[0] = x;
     tailY[0] = y;
+
     for (int i = 1; i < tailLength; i++) {
         prev2X   = tailX[i];
         prev2Y   = tailY[i];
@@ -140,7 +139,6 @@ void Logic()
         prevX    = prev2X;
         prevY    = prev2Y;
     }
-
     switch (dir) {
     case LEFT:
         x--;
@@ -169,9 +167,19 @@ void Logic()
         gameOver = true;
     }
 
+
     for (int k = 1; k < tailLength; k++) {
         if (tailX[k] == x && tailY[k] == y)
             gameOver = true;
+    }
+}
+
+
+void Run() {
+	while (!gameOver) {
+        Draw();
+        Logic();
+        usleep(250000);
     }
 }
 
@@ -180,14 +188,13 @@ int main()
 {
     Setup();
 
-
     while (!gameOver) {
         Draw();
         Logic();
         Input();
-        usleep(150000);
+        usleep(250000);
     }
-
+   
     std::cout << "-------------Koniec gry-------------"
               << "\n";
     return 0;
