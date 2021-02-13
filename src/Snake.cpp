@@ -1,6 +1,7 @@
 #include <sys/ioctl.h>
 #include <termios.h>
 #include <unistd.h>
+
 #include <iostream>
 #include <random>
 
@@ -12,7 +13,7 @@ int y;
 int dollarX;
 int dollarY;
 int score;
-enum Direction { STOP = 0, LEFT, RIGHT, UP, DOWN };
+enum Direction { CENTER = 0, LEFT, RIGHT, UP, DOWN };
 Direction dir;
 int tailX[100] = {0}, tailY[100] = {0};
 int tailLength;
@@ -22,7 +23,7 @@ std::random_device rd;
 void Setup()
 {
     gameOver = false;
-    dir      = STOP;
+    dir      = CENTER;
     x        = width / 2;
     y        = height / 2;
     dollarX  = random_number(rd) % width;
