@@ -97,6 +97,7 @@ void Input()
         char ch;
         std::cin >> ch;
         switch (ch) {
+
         case 'a':
             dir = LEFT;
             break;
@@ -173,6 +174,15 @@ void Logic()
 }
 
 
+void Run() {
+	while (!gameOver) {
+        Draw();
+        Logic();
+        usleep(250000);
+    }
+}
+
+
 int main()
 {
     Setup();
@@ -181,7 +191,7 @@ int main()
         Draw();
         Logic();
         Input();
-        usleep(150000);
+        usleep(250000);
     }
 
 
