@@ -109,6 +109,11 @@ void Input()
         case 'x':
             gameOver = true;
             break;
+        case 'q':
+            gameOver = true;
+            std::cout << "Opuszczono grę"
+                      << "\n";
+            break;
         }
     }
 }
@@ -157,6 +162,7 @@ void Logic()
         gameOver = true;
     }
 
+
     for (int k = 1; k < tailLength; k++) {
         if (tailX[k] == x && tailY[k] == y)
             gameOver = true;
@@ -174,6 +180,7 @@ int main()
         Input();
         usleep(150000);
     }
+
 
     std::cout << "-------------Koniec gry-------------"
               << "\n";
